@@ -1,4 +1,4 @@
-namespace FOMServer.Shared.Interop.FOMNetwork.Enums
+﻿namespace FOMServer.Shared.Interop.FOMNetwork.Enums
 {
     /// <summary>
     /// The packet identifiers used in the FOM server-client communication.
@@ -79,7 +79,7 @@ namespace FOMServer.Shared.Interop.FOMNetwork.Enums
         // ID_MERGE_ITEMS = 144,
         // ID_RELOAD = 145,
         // ID_BACKPACK_CONTENTS = 146,
-        // ID_ITEMS_ADDED = 147,
+        ID_ITEMS_ADDED = 147,
         ID_AVATAR_CHANGE = 148,
         ID_CHAT = 149,
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <fom-network/InteropTypes.h>
 
@@ -67,7 +67,7 @@ enum PacketIdentifier : uint8_t {
   // ID_MERGE_ITEMS = 144,
   // ID_RELOAD = 145,
   // ID_BACKPACK_CONTENTS = 146,
-  // ID_ITEMS_ADDED = 147,
+  ID_ITEMS_ADDED = 147,
   ID_AVATAR_CHANGE = 148,
   ID_CHAT = 149,
   // ID_TAUNT = 150,
