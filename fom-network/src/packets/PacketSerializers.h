@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "../BaseSerializer.h"
 
@@ -126,5 +126,6 @@ SERIALIZER_WRITE(WorldObjectsPacket);
 SERIALIZER_BOTH(WorldServicePacket);
 SERIALIZER_WRITE(AttributeChangePacket);
 SERIALIZER_WRITE(AvatarChangePacket);
+SERIALIZER_BOTH(WorldLogoutPacket);
 
 }  // namespace FOMNetwork

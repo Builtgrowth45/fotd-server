@@ -1,4 +1,4 @@
-namespace FOMServer.Shared.Interop.FOMNetwork.Enums
+﻿namespace FOMServer.Shared.Interop.FOMNetwork.Enums
 {
     /// <summary>
     /// The packet identifiers used in the FOM server-client communication.
@@ -43,7 +43,7 @@ namespace FOMServer.Shared.Interop.FOMNetwork.Enums
         ID_WORLD_LOGIN = 114,
         ID_WORLD_LOGIN_RETURN = 115,
 
-        // ID_WORLD_LOGOUT = 116,
+        ID_WORLD_LOGOUT = 116,
         ID_PLAYER_MIGRATE_WORLD = 117,
         ID_PLAYER_WORLD_READY = 118,
         ID_PLAYER_LEAVING_WORLD = 119,
