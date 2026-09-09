@@ -13,7 +13,22 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 # Suppress warnings from GoogleTest's old CMakeLists.txt
 set(CMAKE_WARN_DEPRECATED OFF CACHE BOOL "" FORCE)
 set(CMAKE_SUPPRESS_DEVELOPER_WARNINGS ON CACHE BOOL "" FORCE)
+
+# The pinned GoogleTest declares cmake_minimum_required(VERSION 2.8.8). CMake 4
+# removed compatibility below 3.5 and refuses to configure it at all, so the
+# floor is raised for GoogleTest only and put back immediately afterwards.
+if(CMAKE_VERSION VERSION_GREATER_EQUAL 4.0)
+    set(_fom_saved_policy_minimum "${CMAKE_POLICY_VERSION_MINIMUM}")
+    set(CMAKE_POLICY_VERSION_MINIMUM 3.5)
+endif()
+
 FetchContent_MakeAvailable(googletest)
+
+if(CMAKE_VERSION VERSION_GREATER_EQUAL 4.0)
+    set(CMAKE_POLICY_VERSION_MINIMUM "${_fom_saved_policy_minimum}")
+    unset(_fom_saved_policy_minimum)
+endif()
+
 set(CMAKE_WARN_DEPRECATED ON CACHE BOOL "" FORCE)
 set(CMAKE_SUPPRESS_DEVELOPER_WARNINGS OFF CACHE BOOL "" FORCE)
 
