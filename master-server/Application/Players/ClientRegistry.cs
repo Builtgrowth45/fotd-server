@@ -35,6 +35,10 @@ namespace FOMServer.Master.Application.Players
 
         public bool Unregister(ClientSession session)
         {
+            // Marked before the removal so a login still in flight sees it, whichever
+            // order the two end up running in.
+            session.MarkDisconnected();
+
             if (!_sessions.TryRemove(new(session.Address, session)))
             {
                 return false;

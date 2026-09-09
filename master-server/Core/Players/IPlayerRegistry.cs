@@ -7,5 +7,15 @@ namespace FOMServer.Master.Core.Players
         Player Login(ClientSession session);
 
         void Logout(Player player);
+
+        /// <summary>
+        /// Logs out whichever player belongs to a session that has gone away.
+        /// </summary>
+        /// <remarks>
+        /// Covers a login that had not finished attaching its player to the
+        /// session, which would otherwise leave the player in the registry with
+        /// nothing owning it.
+        /// </remarks>
+        void LogoutSession(ClientSession session);
     }
 }

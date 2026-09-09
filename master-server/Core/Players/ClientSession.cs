@@ -14,6 +14,32 @@ namespace FOMServer.Master.Core.Players
 
         public NetworkAddress Address { get; }
 
+        /// <summary>
+        /// Whether the client has gone away.
+        /// </summary>
+        /// <remarks>
+        /// A login that is still loading has no way to notice the client leaving,
+        /// so it checks this once it finishes and releases the player it built
+        /// rather than leaving it stranded in the registry.
+        /// </remarks>
+        public bool IsDisconnected
+        {
+            get
+            {
+                lock (_syncRoot)
+                {
+                    return field;
+                }
+            }
+            private set
+            {
+                lock (_syncRoot)
+                {
+                    field = value;
+                }
+            }
+        }
+
         public uint? PlayerId
         {
             get
@@ -134,6 +160,14 @@ namespace FOMServer.Master.Core.Players
 
                 Player = player;
             }
+        }
+
+        /// <summary>
+        /// Records that the client has gone away.
+        /// </summary>
+        public void MarkDisconnected()
+        {
+            IsDisconnected = true;
         }
 
         public void BeginWorldTransfer(WorldId world)
