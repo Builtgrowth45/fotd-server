@@ -23,6 +23,47 @@ namespace FOMServer.Shared.Tests.Packets
         }
 
         [Fact]
+        public void AddDestination_AfterEmptyStart_UsesTheSingleAddressSlot()
+        {
+            var address = new NetworkAddress { BinaryAddress = 0x0100007F, Port = 7777 };
+
+            using var writer = new PacketWriter<ConnectionRequestAcceptedPacket>();
+
+            Assert.False(writer.HasDestinations);
+
+            writer.AddDestination(address);
+
+            Assert.True(writer.HasDestinations);
+
+            var packet = writer.Build();
+            var addresses = packet.NetworkAddresses;
+
+            Assert.Equal(1, addresses.Length);
+            Assert.Equal(address, addresses[0]);
+
+            packet.Release();
+        }
+
+        [Fact]
+        public void Build_WithNoDestinations_ThrowsInvalidOperation()
+        {
+            // A ref struct cannot be captured by a lambda, so Assert.Throws is out.
+            using var writer = new PacketWriter<ConnectionRequestAcceptedPacket>();
+
+            var threw = false;
+            try
+            {
+                writer.Build();
+            }
+            catch (InvalidOperationException)
+            {
+                threw = true;
+            }
+
+            Assert.True(threw);
+        }
+
+        [Fact]
         public void AddDestination_SupportsMultipleAddresses()
         {
             var address1 = new NetworkAddress { BinaryAddress = 0x0100007F, Port = 7777 };

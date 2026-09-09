@@ -82,6 +82,36 @@ namespace FOMServer.World.Core.World
             }
         }
 
+        /// <summary>
+        /// Whether this position lies within <paramref name="radius"/> of another.
+        /// </summary>
+        /// <remarks>
+        /// Compares squared distances so there is no square root and no floating
+        /// point. Coordinates are shorts, so the squared distance of the widest
+        /// possible separation still fits comfortably in a long.
+        /// </remarks>
+        public bool IsWithinRadius(ServerPosition other, ushort radius)
+        {
+            short otherX,
+                otherY,
+                otherZ;
+            lock (other._syncRoot)
+            {
+                otherX = other._x;
+                otherY = other._y;
+                otherZ = other._z;
+            }
+
+            lock (_syncRoot)
+            {
+                long dx = _x - otherX;
+                long dy = _y - otherY;
+                long dz = _z - otherZ;
+
+                return (dx * dx) + (dy * dy) + (dz * dz) <= (long)radius * radius;
+            }
+        }
+
         public void WriteTo(ref PositionInterop p)
         {
             lock (_syncRoot)

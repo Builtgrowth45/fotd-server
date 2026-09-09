@@ -1,9 +1,11 @@
 using System.Collections.Concurrent;
+using FOMServer.Shared.Core.Networking;
 using FOMServer.Shared.Core.Persistence;
 using FOMServer.Shared.Interop.FOMNetwork;
 using FOMServer.World.Application.Players.Registration;
 using FOMServer.World.Core.Players;
 using FOMServer.World.Core.Players.Registration;
+using FOMServer.World.Core.World;
 
 namespace FOMServer.World.Application.Players
 {
@@ -44,6 +46,55 @@ namespace FOMServer.World.Application.Players
         public IEnumerable<Player> GetAll()
         {
             return _players.Values;
+        }
+
+        public int BroadcastToWorld<TPacket>(ref PacketWriter<TPacket> writer, uint? excludePlayerId = null)
+            where TPacket : unmanaged
+        {
+            // Every player in this registry is already on this world server, so
+            // the whole registry is the world audience. Destinations go straight
+            // onto the writer rather than through an intermediate collection.
+            var added = 0;
+            foreach (var player in _players.Values)
+            {
+                if (player.Id == excludePlayerId)
+                {
+                    continue;
+                }
+
+                writer.AddDestination(player.Address);
+                ++added;
+            }
+
+            return added;
+        }
+
+        public int BroadcastToRadius<TPacket>(
+            ref PacketWriter<TPacket> writer,
+            ServerPosition origin,
+            ushort radius,
+            uint? excludePlayerId = null
+        )
+            where TPacket : unmanaged
+        {
+            var added = 0;
+            foreach (var player in _players.Values)
+            {
+                if (player.Id == excludePlayerId)
+                {
+                    continue;
+                }
+
+                if (!player.Position.IsWithinRadius(origin, radius))
+                {
+                    continue;
+                }
+
+                writer.AddDestination(player.Address);
+                ++added;
+            }
+
+            return added;
         }
 
         public Player PrepareForClient(uint playerId, uint clientBinaryAddress)

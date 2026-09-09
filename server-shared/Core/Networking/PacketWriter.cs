@@ -36,13 +36,29 @@ namespace FOMServer.Shared.Core.Networking
         /// </summary>
         private bool _ownsBuffer;
 
+        /// <summary>
+        /// Creates a writer with no destination yet.
+        /// </summary>
+        /// <remarks>
+        /// Broadcasts collect their destinations from a registry rather than knowing
+        /// them up front. At least one destination must be added before building.
+        /// </remarks>
+        public PacketWriter()
+            : this(0) { }
+
         public PacketWriter(in NetworkAddress destination)
+            : this(1)
+        {
+            _networkAddress = destination;
+        }
+
+        private PacketWriter(int addressCount)
         {
             // Since most packets are sent to a single address, we optimize for that case
             // by having a single address field. When more addresses are needed, an
             // array can be set and used in place of the single address.
-            _addressCount = 1;
-            _networkAddress = destination;
+            _addressCount = addressCount;
+            _networkAddress = default;
             _networkAddresses = null;
 
             _priority = PacketPriority.Medium;
@@ -101,6 +117,15 @@ namespace FOMServer.Shared.Core.Networking
         }
 
         /// <summary>
+        /// Whether the writer has at least one destination to send to.
+        /// </summary>
+        /// <remarks>
+        /// A broadcast finds no recipients when nobody is in range, so callers
+        /// can check this instead of building a packet that goes nowhere.
+        /// </remarks>
+        public readonly bool HasDestinations => _addressCount > 0;
+
+        /// <summary>
         /// Adds a destination address to the packet.
         /// </summary>
         /// <remarks>
@@ -118,6 +143,15 @@ namespace FOMServer.Shared.Core.Networking
                 throw new InvalidOperationException(
                     $"Cannot add more than {QueuePacket.MaxNetworkAddressesPerPacket} destinations"
                 );
+            }
+
+            // A broadcast starts with no destination at all, so the first one
+            // added takes the dedicated single-address slot.
+            if (_addressCount == 0)
+            {
+                _networkAddress = address;
+                _addressCount = 1;
+                return;
             }
 
             // Just keep adding addresses if we have already added more than one.
@@ -138,6 +172,11 @@ namespace FOMServer.Shared.Core.Networking
         public QueuePacket Build()
         {
             ThrowIfInvalid();
+
+            if (_addressCount == 0)
+            {
+                throw new InvalidOperationException("The packet has no destinations to be sent to");
+            }
 
             // Mark that it can't be used anymore.
             _ownsBuffer = false;
