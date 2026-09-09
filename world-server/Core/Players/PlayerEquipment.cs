@@ -116,6 +116,36 @@ namespace FOMServer.World.Core.Players
             return null;
         }
 
+        /// <summary>
+        /// Fires the weapon in the given slot, spending ammunition and durability.
+        /// </summary>
+        /// <param name="slotType">The weapon slot to fire from.</param>
+        /// <param name="rounds">The number of rounds to spend.</param>
+        /// <returns>The number of rounds actually spent, zero when the slot cannot fire.</returns>
+        public int FireWeapon(ItemSlotType slotType, ushort rounds = 1)
+        {
+            if (rounds == 0)
+            {
+                return 0;
+            }
+
+            if (!_itemSlots.TryGetValue(slotType, out var slot) || slot is not WeaponSlot weaponSlot)
+            {
+                return 0;
+            }
+
+            var fired = weaponSlot.FireWeapon(rounds, out var destroyed);
+
+            // Deleting a worn-out weapon already reports the change through ItemsDeleted,
+            // so only announce the ammunition change when the weapon survived.
+            if (fired > 0 && !destroyed)
+            {
+                OnEquipmentChanged();
+            }
+
+            return fired;
+        }
+
         public IReadOnlyList<ItemSnapshot> ToSnapshots()
         {
             List<ItemSnapshot> snapshots = [];
@@ -152,6 +182,41 @@ namespace FOMServer.World.Core.Players
         {
             public WeaponSlot(IItemLocation location, ItemSlotType slotType, Item? item)
                 : base(location, slotType, item) { }
+
+            /// <summary>
+            /// Spends ammunition from the equipped weapon, wearing it down as it fires.
+            /// </summary>
+            /// <param name="rounds">The number of rounds to spend.</param>
+            /// <param name="destroyed">Whether the weapon wore out and was deleted.</param>
+            /// <returns>The number of rounds actually spent.</returns>
+            public int FireWeapon(ushort rounds, out bool destroyed)
+            {
+                destroyed = false;
+
+                Item? weapon;
+                lock (_syncRoot)
+                {
+                    weapon = _item;
+                }
+
+                if (weapon is null || weapon.IsDeleted)
+                {
+                    return 0;
+                }
+
+                var fired = weapon.UseValue(rounds, decreaseDurability: true);
+                if (fired == 0)
+                {
+                    return 0;
+                }
+
+                if (weapon.IsBroken)
+                {
+                    destroyed = TryDeleteItems(weapon.Id);
+                }
+
+                return fired;
+            }
         }
 
         private class EquipmentSlot : ItemSlot
