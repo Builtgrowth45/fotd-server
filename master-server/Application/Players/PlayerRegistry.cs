@@ -19,7 +19,7 @@ namespace FOMServer.Master.Application.Players
             return _players.GetValueOrDefault(playerId);
         }
 
-        public Player Login(ClientSession session)
+        public Player Login(ClientSession session, string name)
         {
             if (!session.PlayerId.HasValue)
             {
@@ -28,7 +28,7 @@ namespace FOMServer.Master.Application.Players
 
             var playerId = session.PlayerId.Value;
 
-            var player = new Player(playerId, session);
+            var player = new Player(playerId, name, session);
 
             if (!_players.TryAdd(playerId, player))
             {

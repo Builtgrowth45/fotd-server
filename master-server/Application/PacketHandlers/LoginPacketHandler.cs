@@ -1,4 +1,4 @@
-using FOMServer.Master.Core.Networking;
+﻿using FOMServer.Master.Core.Networking;
 using FOMServer.Master.Core.Players;
 using FOMServer.Shared.Core.Networking;
 using FOMServer.Shared.Core.PacketHandlers;
@@ -82,7 +82,7 @@ namespace FOMServer.Master.Application.PacketHandlers
             }
 
             _clientRegistry.BeginLogin(session, account.id);
-            _playerRegistry.Login(session);
+            _playerRegistry.Login(session, player.name);
 
             rData.Status = LoginReturnPacket.StatusCode.Success;
             rData.AccountType = AccountType.Prepaid;

@@ -30,18 +30,32 @@ namespace FOMServer.Master.Application.PacketHandlers
 
         public override void Handle(NetworkAddress sender, in ChatPacket p)
         {
-            var player = _clientRegistry.Get(sender);
-            if (player is null)
+            var session = _clientRegistry.Get(sender);
+            if (session is null)
             {
                 _logger.LogWarning("Received unexpected packet for player {PlayerId}", p.SenderId);
+                return;
+            }
+
+            // A session that has not finished logging in has no character behind
+            // it yet, so there is no name to speak under.
+            var player = session.Player;
+            if (player is null)
+            {
+                _logger.LogWarning("Dropping chat from '{Sender}' before login completed", sender);
                 return;
             }
 
             using var response = new PacketWriter<ChatPacket>(sender);
             ref var rData = ref response.Data;
             rData.Channel = p.Channel;
-            rData.SenderId = p.SenderId;
-            rData.SenderName = "Naruto Uzumaki";
+
+            // Identity comes from the session rather than the packet, so a client
+            // cannot speak as somebody else.
+            rData.SenderId = player.Id;
+            rData.SenderName = player.Name;
+            rData.TargetId = p.TargetId;
+            rData.ChatStyle = p.ChatStyle;
             rData.Message = p.Message;
             _clientPacketSender.Send(response.Build());
         }
