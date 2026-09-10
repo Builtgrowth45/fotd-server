@@ -31,6 +31,11 @@ namespace FOMServer.World.Application.Players
             _persistenceService = persistenceService;
         }
 
+        /// <summary>
+        /// How many handovers are waiting for their client to arrive.
+        /// </summary>
+        public int PendingCount => _pendingPlayers.Count;
+
         public Player? Get(uint playerId)
         {
             return _players.GetValueOrDefault(playerId);
@@ -52,7 +57,14 @@ namespace FOMServer.World.Application.Players
                 _playerLoader.Load(playerId)
                 ?? throw new InvalidOperationException($"Unable to load player {playerId}");
 
-            _pendingPlayers[playerId] = new PendingPlayer(player, clientBinaryAddress, _timeProvider.GetUtcNow());
+            var now = _timeProvider.GetUtcNow();
+
+            // A client that never arrives leaves its entry behind, and nothing
+            // else ever looks at it again. Sweeping here keeps the collection
+            // bounded without needing a timer.
+            ExpirePending(now);
+
+            _pendingPlayers[playerId] = new PendingPlayer(player, clientBinaryAddress, now);
 
             return player;
         }
@@ -110,6 +122,20 @@ namespace FOMServer.World.Application.Players
                     _players.TryRemove(new(player.Id, player));
                 }
             );
+        }
+
+        /// <summary>
+        /// Drops handovers whose window has closed.
+        /// </summary>
+        private void ExpirePending(DateTimeOffset now)
+        {
+            foreach (var (playerId, pending) in _pendingPlayers)
+            {
+                if (pending.IsExpired(now))
+                {
+                    _pendingPlayers.TryRemove(new(playerId, pending));
+                }
+            }
         }
 
         private readonly record struct PendingPlayer

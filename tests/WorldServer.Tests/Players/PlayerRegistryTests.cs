@@ -92,6 +92,37 @@ namespace FOMServer.World.Tests.Players
             Assert.NotNull(fixture.Registry.ClaimForClient(PlayerId, Address(binary: 0x02000010)));
         }
 
+        [Fact]
+        public void Prepare_DropsHandoversWhoseClientNeverArrived()
+        {
+            var fixture = new PlayerRegistryFixture();
+
+            fixture.Registry.PrepareForClient(PlayerId, ClientBinary);
+            Assert.Equal(1, fixture.Registry.PendingCount);
+
+            fixture.Time.Advance(TimeSpan.FromHours(1));
+
+            // Preparing another handover sweeps the one that timed out, so an
+            // unclaimed entry cannot accumulate forever.
+            fixture.Registry.PrepareForClient(PlayerId + 1, ClientBinary);
+
+            Assert.Equal(1, fixture.Registry.PendingCount);
+            Assert.Null(fixture.Registry.ClaimForClient(PlayerId, Address()));
+            Assert.NotNull(fixture.Registry.ClaimForClient(PlayerId + 1, Address()));
+        }
+
+        [Fact]
+        public void Prepare_KeepsHandoversStillInsideTheirWindow()
+        {
+            var fixture = new PlayerRegistryFixture();
+
+            fixture.Registry.PrepareForClient(PlayerId, ClientBinary);
+            fixture.Time.Advance(TimeSpan.FromSeconds(10));
+            fixture.Registry.PrepareForClient(PlayerId + 1, ClientBinary);
+
+            Assert.Equal(2, fixture.Registry.PendingCount);
+        }
+
         private static NetworkAddress Address(uint binary = ClientBinary, ushort port = 7777)
         {
             return new NetworkAddress { BinaryAddress = binary, Port = port };
