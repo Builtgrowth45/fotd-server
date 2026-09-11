@@ -2,7 +2,6 @@
 
 #include <fom-network/packets/AttributeChangePacket.h>
 #include <fom-network/packets/AvatarChangePacket.h>
-#include <fom-network/packets/WorldLogoutPacket.h>
 #include <fom-network/packets/ChatPacket.h>
 #include <fom-network/packets/CheckNamePacket.h>
 #include <fom-network/packets/CheckNameReturnPacket.h>
@@ -22,6 +21,7 @@
 #include <fom-network/packets/UpdatePacket.h>
 #include <fom-network/packets/WorldLoginPacket.h>
 #include <fom-network/packets/WorldLoginReturnPacket.h>
+#include <fom-network/packets/WorldLogoutPacket.h>
 #include <fom-network/packets/WorldObjectsPacket.h>
 #include <fom-network/packets/WorldServicePacket.h>
 #include <fom-network/packets/WorldUpdatePacket.h>
