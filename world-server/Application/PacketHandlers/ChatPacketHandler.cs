@@ -1,4 +1,4 @@
-﻿using FOMServer.Shared.Core.Enums;
+using FOMServer.Shared.Core.Enums;
 using FOMServer.Shared.Core.Networking;
 using FOMServer.Shared.Core.PacketHandlers;
 using FOMServer.Shared.Interop.FOMNetwork;
