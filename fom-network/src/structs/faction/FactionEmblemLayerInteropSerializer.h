@@ -11,7 +11,9 @@ class FactionEmblemLayerInteropSerializer
  public:
   void Write(RakNet::BitStream& bs,
              const FactionEmblemLayerInterop& data) const {
-    bool hasLayer = data.shape != 0 || data.offsetX != 0 || data.offsetY != 0;
+    // The client only sends a layer that has both scales, so shape 0 at the
+    // origin is still a real layer.
+    bool hasLayer = data.scaleWidth != 0 && data.scaleHeight != 0;
 
     bs.Write(hasLayer);
     if (!hasLayer) return;

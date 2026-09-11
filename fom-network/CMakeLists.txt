@@ -159,6 +159,7 @@ set(FOMNETWORK_INC
 )
 set(FOMNETWORK_TEST
     "tests/FOMDataSerializer_test.cpp"
+    "tests/FactionEmblemLayerInteropSerializer_test.cpp"
 )
 
 # Object library - compiled once, used by both DLL and tests
