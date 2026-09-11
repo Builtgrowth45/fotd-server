@@ -8,6 +8,7 @@ namespace FOMServer.Master.Tests.Players
     public class PlayerRegistryTests
     {
         private const uint PlayerId = 42;
+        private const string PlayerName = "Test Player";
 
         [Fact]
         public void Login_ThenLogout_RemovesThePlayer()
@@ -15,7 +16,7 @@ namespace FOMServer.Master.Tests.Players
             var fixture = new Fixture();
             var session = fixture.BeginLogin();
 
-            var player = fixture.Registry.Login(session);
+            var player = fixture.Registry.Login(session, PlayerName);
             Assert.Same(player, fixture.Registry.Get(PlayerId));
 
             fixture.Registry.Logout(player);
@@ -33,7 +34,7 @@ namespace FOMServer.Master.Tests.Players
             fixture.ClientRegistry.Unregister(session);
             Assert.Null(session.Player);
 
-            fixture.Registry.Login(session);
+            fixture.Registry.Login(session, PlayerName);
 
             // The login notices the session is gone and releases what it built.
             Assert.Null(fixture.Registry.Get(PlayerId));
@@ -44,7 +45,7 @@ namespace FOMServer.Master.Tests.Players
         {
             var fixture = new Fixture();
             var session = fixture.BeginLogin();
-            fixture.Registry.Login(session);
+            fixture.Registry.Login(session, PlayerName);
 
             Assert.NotNull(fixture.Registry.Get(PlayerId));
 
@@ -61,7 +62,7 @@ namespace FOMServer.Master.Tests.Players
             var session = fixture.BeginLogin();
 
             // Registered against the id, but the session was never told about it.
-            var player = fixture.Registry.Login(session);
+            var player = fixture.Registry.Login(session, PlayerName);
             Assert.NotNull(fixture.Registry.Get(PlayerId));
 
             var orphaned = new OrphanSession(session.Address, PlayerId);
