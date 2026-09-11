@@ -3,10 +3,10 @@
 #include <fom-network/packets/AttributeChangePacket.h>
 #include <fom-network/packets/AvatarChangePacket.h>
 #include <fom-network/packets/ChatPacket.h>
-#include <fom-network/packets/ItemsAddedPacket.h>
 #include <fom-network/packets/CheckNamePacket.h>
 #include <fom-network/packets/CheckNameReturnPacket.h>
 #include <fom-network/packets/CreateCharacterPacket.h>
+#include <fom-network/packets/ItemsAddedPacket.h>
 #include <fom-network/packets/LoginPacket.h>
 #include <fom-network/packets/LoginRequestPacket.h>
 #include <fom-network/packets/LoginRequestReturnPacket.h>
