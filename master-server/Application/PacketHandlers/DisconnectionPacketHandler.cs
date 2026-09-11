@@ -62,12 +62,10 @@ namespace FOMServer.Master.Application.PacketHandlers
                 return;
             }
 
-            if (session.Player is not null)
-            {
-                _playerRegistry.Logout(session.Player);
-            }
-
+            // Unregister first so the session is marked disconnected; a login still
+            // in flight then releases its own player when it finishes.
             _clientRegistry.Unregister(session);
+            _playerRegistry.LogoutSession(session);
         }
     }
 }

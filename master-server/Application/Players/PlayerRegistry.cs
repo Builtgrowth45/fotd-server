@@ -37,12 +37,39 @@ namespace FOMServer.Master.Application.Players
 
             session.CompleteLogin(player);
             _persistenceService.Register(player);
+
+            // The client may have left while the player was being built. Nothing
+            // will come back for it, so release it here rather than leaving it
+            // stranded in the registry with no session behind it.
+            if (session.IsDisconnected)
+            {
+                Logout(player);
+            }
+
             return player;
         }
 
         public void Logout(Player player)
         {
             _persistenceService.WaitForPersistence(player, () => _players.TryRemove(new(player.Id, player)));
+        }
+
+        public void LogoutSession(ClientSession session)
+        {
+            // A login that had not reached CompleteLogin leaves the session without
+            // a player, so fall back to the id the login started with.
+            var player = session.Player;
+            if (player is null && session.PlayerId.HasValue)
+            {
+                player = Get(session.PlayerId.Value);
+            }
+
+            if (player is null)
+            {
+                return;
+            }
+
+            Logout(player);
         }
     }
 }
