@@ -1,4 +1,4 @@
-﻿#include "FOMDataSerializer.h"
+#include "FOMDataSerializer.h"
 
 #include <fom-network/packets/AttributeChangePacket.h>
 #include <fom-network/packets/AvatarChangePacket.h>
