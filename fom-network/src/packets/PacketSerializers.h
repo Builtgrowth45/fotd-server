@@ -122,6 +122,7 @@ SERIALIZER_READ(UpdatePacket)
 SERIALIZER_WRITE(WorldUpdatePacket)
 SERIALIZER_BOTH(ChatPacket)
 SERIALIZER_BOTH(MoveItemsPacket);
+SERIALIZER_WRITE(ItemsRemovedPacket);
 SERIALIZER_WRITE(WorldObjectsPacket);
 SERIALIZER_BOTH(WorldServicePacket);
 SERIALIZER_WRITE(AttributeChangePacket);

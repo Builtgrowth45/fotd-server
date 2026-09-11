@@ -49,7 +49,7 @@ enum PacketIdentifier : uint8_t {
   ID_UPDATE = 126,
   ID_WORLD_UPDATE = 127,
   // ID_WEATHER = 128,
-  // ID_ITEMS_REMOVED = 129,
+  ID_ITEMS_REMOVED = 129,
   // ID_ITEMS_CHANGED = 130,
   ID_ATTRIBUTE_CHANGE = 131,
   // ID_HIT = 132,

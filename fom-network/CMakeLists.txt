@@ -37,6 +37,7 @@ set(FOMNETWORK_SRC
   "src/packets/WorldUpdatePacketSerializer.cpp"
   "src/packets/ChatPacketSerializer.cpp"
   "src/packets/MoveItemsPacketSerializer.cpp"
+  "src/packets/ItemsRemovedPacketSerializer.cpp"
   "src/packets/WorldObjectsPacketSerializer.cpp"
   "src/packets/WorldServicePacketSerializer.cpp"
   "src/packets/AttributeChangePacketSerializer.cpp"
@@ -152,12 +153,14 @@ set(FOMNETWORK_INC
   "include/fom-network/packets/WorldUpdatePacket.h"
   "include/fom-network/packets/ChatPacket.h"
   "include/fom-network/packets/MoveItemsPacket.h"
+  "include/fom-network/packets/ItemsRemovedPacket.h"
   "include/fom-network/packets/WorldObjectsPacket.h"
   "include/fom-network/packets/WorldServicePacket.h"
   "include/fom-network/packets/AttributeChangePacket.h"
   "include/fom-network/packets/AvatarChangePacket.h"
 )
 set(FOMNETWORK_TEST
+    "tests/ItemsRemovedPacketSerializer_test.cpp"
     "tests/FOMDataSerializer_test.cpp"
 )
 

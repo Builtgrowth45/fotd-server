@@ -6,6 +6,7 @@
 #include <fom-network/packets/CheckNamePacket.h>
 #include <fom-network/packets/CheckNameReturnPacket.h>
 #include <fom-network/packets/CreateCharacterPacket.h>
+#include <fom-network/packets/ItemsRemovedPacket.h>
 #include <fom-network/packets/LoginPacket.h>
 #include <fom-network/packets/LoginRequestPacket.h>
 #include <fom-network/packets/LoginRequestReturnPacket.h>
@@ -79,6 +80,7 @@ static const std::unordered_map<uint8_t, size_t> packetSizes = {
     {Enum::ID_WORLD_UPDATE, sizeof(WorldUpdatePacket)},
     {Enum::ID_CHAT, sizeof(ChatPacket)},
     {Enum::ID_MOVE_ITEMS, sizeof(MoveItemsPacket)},
+    {Enum::ID_ITEMS_REMOVED, sizeof(ItemsRemovedPacket)},
     {Enum::ID_WORLD_OBJECTS, sizeof(WorldObjectsPacket)},
     {Enum::ID_WORLDSERVICE, sizeof(WorldServicePacket)},
     {Enum::ID_ATTRIBUTE_CHANGE, sizeof(AttributeChangePacket)},
@@ -111,6 +113,7 @@ static const std::unordered_map<uint32_t, IWriter*> writerMap = {
     {Enum::ID_WORLD_UPDATE, &WorldUpdatePacketSerializer::GetInstance()},
     {Enum::ID_CHAT, &ChatPacketSerializer::GetInstance()},
     {Enum::ID_MOVE_ITEMS, &MoveItemsPacketSerializer::GetInstance()},
+    {Enum::ID_ITEMS_REMOVED, &ItemsRemovedPacketSerializer::GetInstance()},
     {Enum::ID_WORLD_OBJECTS, &WorldObjectsPacketSerializer::GetInstance()},
     {Enum::ID_WORLDSERVICE, &WorldServicePacketSerializer::GetInstance()},
     {Enum::ID_ATTRIBUTE_CHANGE,
