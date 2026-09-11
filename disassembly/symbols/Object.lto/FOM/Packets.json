@@ -15,6 +15,19 @@
    "returnType": "/bool"
   },
   {
+   "addr": "100510b0",
+   "callingConvention": "__stdcall",
+   "name": "HandlePacket_ID_OBJECT_DETAILS",
+   "namespace": "FOM::Packets",
+   "params": [
+    {
+     "name": "packet",
+     "type": "/RakNet/Packet *"
+    }
+   ],
+   "returnType": "/bool"
+  },
+  {
    "addr": "10051ca0",
    "callingConvention": "__stdcall",
    "name": "HandlePacket_ID_WORLD_UPDATE",

@@ -38,6 +38,7 @@ set(FOMNETWORK_SRC
   "src/packets/ChatPacketSerializer.cpp"
   "src/packets/MoveItemsPacketSerializer.cpp"
   "src/packets/WorldObjectsPacketSerializer.cpp"
+  "src/packets/ObjectDetailsPacketSerializer.cpp"
   "src/packets/WorldServicePacketSerializer.cpp"
   "src/packets/AttributeChangePacketSerializer.cpp"
   "src/packets/AvatarChangePacketSerializer.cpp"
@@ -153,12 +154,14 @@ set(FOMNETWORK_INC
   "include/fom-network/packets/ChatPacket.h"
   "include/fom-network/packets/MoveItemsPacket.h"
   "include/fom-network/packets/WorldObjectsPacket.h"
+  "include/fom-network/packets/ObjectDetailsPacket.h"
   "include/fom-network/packets/WorldServicePacket.h"
   "include/fom-network/packets/AttributeChangePacket.h"
   "include/fom-network/packets/AvatarChangePacket.h"
 )
 set(FOMNETWORK_TEST
     "tests/FOMDataSerializer_test.cpp"
+    "tests/ObjectDetailsPacketSerializer_test.cpp"
 )
 
 # Object library - compiled once, used by both DLL and tests

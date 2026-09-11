@@ -55,6 +55,12 @@
  },
  {
   "kind": "class",
+  "name": "Packet_ID_OBJECT_DETAILS",
+  "parent": "FOM::Packets",
+  "path": "FOM::Packets::Packet_ID_OBJECT_DETAILS"
+ },
+ {
+  "kind": "class",
   "name": "Packet_ID_WORLDSERVICE",
   "parent": "FOM::Packets",
   "path": "FOM::Packets::Packet_ID_WORLDSERVICE"

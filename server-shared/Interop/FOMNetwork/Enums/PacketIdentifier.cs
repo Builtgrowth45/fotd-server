@@ -94,7 +94,8 @@ namespace FOMServer.Shared.Interop.FOMNetwork.Enums
         // 158
         // ID_PLAYERFILE = 159,
         // 160
-        // ID_OBJECT_DETAILS = 161,
+        ID_OBJECT_DETAILS = 161,
+
         // ID_SPLIT_CONTAINER = 162,
         // ID_SKILLS = 163,
         // ID_USE_ITEM = 164,

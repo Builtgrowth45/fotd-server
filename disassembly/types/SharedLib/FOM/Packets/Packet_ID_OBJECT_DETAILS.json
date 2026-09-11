@@ -1,0 +1,138 @@
+{
+ "desc": null,
+ "explicitAlign": null,
+ "explicitPack": null,
+ "fields": [
+  {
+   "comment": null,
+   "len": 1072,
+   "name": "base",
+   "offset": 0,
+   "type": "/FOM/Packets/VariableSizedPacket"
+  },
+  {
+   "comment": null,
+   "len": 4,
+   "name": "objectId",
+   "offset": 1072,
+   "type": "/stdint.h/uint32_t"
+  },
+  {
+   "comment": "only sent when hasDetails is false",
+   "len": 4,
+   "name": "playerId",
+   "offset": 1076,
+   "type": "/stdint.h/uint32_t"
+  },
+  {
+   "comment": null,
+   "len": 1,
+   "name": "type",
+   "offset": 1080,
+   "type": "/stdint.h/uint8_t"
+  },
+  {
+   "comment": null,
+   "len": 1,
+   "name": "hasDetails",
+   "offset": 1081,
+   "type": "/bool"
+  },
+  {
+   "comment": null,
+   "len": 20,
+   "name": "name",
+   "offset": 1082,
+   "type": {
+    "arr": "/stdint.h/uint8_t",
+    "n": 20
+   }
+  },
+  {
+   "comment": null,
+   "len": 32,
+   "name": null,
+   "offset": 1102,
+   "type": {
+    "arr": "/stdint.h/uint8_t",
+    "n": 32
+   }
+  },
+  {
+   "comment": null,
+   "len": 64,
+   "name": null,
+   "offset": 1134,
+   "type": {
+    "arr": "/stdint.h/uint8_t",
+    "n": 64
+   }
+  },
+  {
+   "comment": null,
+   "len": 124,
+   "name": "emblem",
+   "offset": 1200,
+   "type": "/FOM/Types/Faction/FactionEmblem"
+  },
+  {
+   "comment": null,
+   "len": 1,
+   "name": null,
+   "offset": 1324,
+   "type": "/bool"
+  },
+  {
+   "comment": null,
+   "len": 1,
+   "name": null,
+   "offset": 1325,
+   "type": "/bool"
+  },
+  {
+   "comment": null,
+   "len": 1,
+   "name": null,
+   "offset": 1326,
+   "type": "/stdint.h/uint8_t"
+  },
+  {
+   "comment": null,
+   "len": 4,
+   "name": null,
+   "offset": 1327,
+   "type": {
+    "arr": "/stdint.h/uint8_t",
+    "n": 4
+   }
+  },
+  {
+   "comment": null,
+   "len": 1,
+   "name": null,
+   "offset": 1331,
+   "type": "/stdint.h/uint8_t"
+  },
+  {
+   "comment": null,
+   "len": 4,
+   "name": null,
+   "offset": 1332,
+   "type": {
+    "arr": "/stdint.h/uint8_t",
+    "n": 4
+   }
+  },
+  {
+   "comment": null,
+   "len": 1,
+   "name": null,
+   "offset": 1336,
+   "type": "/stdint.h/uint8_t"
+  }
+ ],
+ "kind": "struct",
+ "len": 1344,
+ "packed": true,
+ "path": "/FOM/Packets/Packet_ID_OBJECT_DETAILS"
+}

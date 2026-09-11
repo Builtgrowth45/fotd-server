@@ -17,8 +17,15 @@ FetchContent_MakeAvailable(googletest)
 set(CMAKE_WARN_DEPRECATED ON CACHE BOOL "" FORCE)
 set(CMAKE_SUPPRESS_DEVELOPER_WARNINGS OFF CACHE BOOL "" FORCE)
 
+# Test sources are listed relative to the project root, so each one needs the
+# prefix rather than only the first entry of the expanded list.
+set(FOMNETWORK_TEST_SOURCES)
+foreach(test_source ${FOMNETWORK_TEST})
+    list(APPEND FOMNETWORK_TEST_SOURCES "${PROJECT_SOURCE_DIR}/${test_source}")
+endforeach()
+
 # Create the test executable FIRST
-add_executable(FOMNetworkTests ${PROJECT_SOURCE_DIR}/${FOMNETWORK_TEST})
+add_executable(FOMNetworkTests ${FOMNETWORK_TEST_SOURCES})
 
 target_include_directories(FOMNetworkTests PRIVATE
     ${PROJECT_SOURCE_DIR}/include

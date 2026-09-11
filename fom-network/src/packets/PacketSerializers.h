@@ -123,6 +123,7 @@ SERIALIZER_WRITE(WorldUpdatePacket)
 SERIALIZER_BOTH(ChatPacket)
 SERIALIZER_BOTH(MoveItemsPacket);
 SERIALIZER_WRITE(WorldObjectsPacket);
+SERIALIZER_BOTH(ObjectDetailsPacket);
 SERIALIZER_BOTH(WorldServicePacket);
 SERIALIZER_WRITE(AttributeChangePacket);
 SERIALIZER_WRITE(AvatarChangePacket);
