@@ -1,4 +1,4 @@
-﻿using FOMServer.Master.Core.Networking;
+using FOMServer.Master.Core.Networking;
 using FOMServer.Master.Core.Players;
 using FOMServer.Shared.Core.PacketHandlers;
 using FOMServer.Shared.Interop.FOMNetwork;
