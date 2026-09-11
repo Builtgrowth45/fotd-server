@@ -1,4 +1,4 @@
-﻿using FOMServer.Master.Core.Networking;
+using FOMServer.Master.Core.Networking;
 using FOMServer.Master.Core.Players;
 using FOMServer.Shared.Core.Enums;
 using FOMServer.Shared.Core.Networking;

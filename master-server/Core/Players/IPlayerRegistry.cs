@@ -1,4 +1,4 @@
-﻿namespace FOMServer.Master.Core.Players
+namespace FOMServer.Master.Core.Players
 {
     internal interface IPlayerRegistry
     {
