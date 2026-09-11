@@ -1,4 +1,4 @@
-﻿namespace FOMServer.Shared.Interop.FOMNetwork.Enums
+namespace FOMServer.Shared.Interop.FOMNetwork.Enums
 {
     /// <summary>
     /// The packet identifiers used in the FOM server-client communication.

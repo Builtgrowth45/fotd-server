@@ -1,4 +1,4 @@
-﻿project(FOMNetwork)
+project(FOMNetwork)
 
 # Use C++11 so that we can take advantage of some of its features.
 set(CMAKE_CXX_STANDARD 11)
@@ -41,7 +41,7 @@ set(FOMNETWORK_SRC
   "src/packets/WorldServicePacketSerializer.cpp"
   "src/packets/AttributeChangePacketSerializer.cpp"
   "src/packets/AvatarChangePacketSerializer.cpp"
-    "src/packets/WorldLogoutPacketSerializer.cpp"
+  "src/packets/WorldLogoutPacketSerializer.cpp"
 )
 set(FOMNETWORK_INC
   # Core API
@@ -157,7 +157,7 @@ set(FOMNETWORK_INC
   "include/fom-network/packets/WorldServicePacket.h"
   "include/fom-network/packets/AttributeChangePacket.h"
   "include/fom-network/packets/AvatarChangePacket.h"
-    "include/fom-network/packets/WorldLogoutPacket.h"
+  "include/fom-network/packets/WorldLogoutPacket.h"
 )
 set(FOMNETWORK_TEST
     "tests/FOMDataSerializer_test.cpp"
